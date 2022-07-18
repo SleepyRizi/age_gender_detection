@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    tools:context=".infoActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:gravity='center'
+        android:paddingTop="80dp"
+        android:text="About US"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity='left'
+
+        android:paddingTop="190dp"
+
+        android:text="• Trained CNN on UTK faces dataset contains 24,000 images\n
+•	Haar-Cascade for face detection\n
+•	Passed to our CNN model for detection\n
+
+•	Used OpenCV 4.5.4\n
+"
+        android:textColor="#97184283"
+        android:textSize="23sp"
+        android:textStyle="italic"
+        tools:ignore="HardcodedText" />
+</LinearLayout>
