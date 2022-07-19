@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.opencv.BuildConfig;
 import org.opencv.R;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
@@ -165,7 +166,7 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                 default:
                     Log.e(TAG, "Invalid frame format! Only RGBA and Gray Scale are supported!");
             };
-
+            //Core.flip(result, result, 1);
             return result;
         }
 
@@ -427,14 +428,14 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
         if (bmpValid && mCacheBitmap != null) {
             Canvas canvas = getHolder().lockCanvas();
-            canvas.rotate(270f, canvas.getWidth()/2, canvas.getHeight()/2);
+            canvas.rotate(270, canvas.getWidth()/2, canvas.getHeight()/2);
 
             float mScale1=0;
             float mScale2=0;
 
             if(canvas.getHeight()> canvas.getWidth()){
                 canvas.rotate(90f,canvas.getWidth()/2,canvas.getHeight()/2);
-                mScale1=1.9f;
+                mScale1=1.8f;
                 mScale2=1.5f;
             }
             else{

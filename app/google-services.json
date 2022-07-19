@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772201072435",
+    "project_id": "agegenderdetection-3a252",
+    "storage_bucket": "agegenderdetection-3a252.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772201072435:android:75f1c773434fc154b82046",
+        "android_client_info": {
+          "package_name": "opencv.org"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772201072435-dbo6sli372jvesa6066c0h1ichepe47a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyAVdT9DeagwtMfx5mZX0CPEXyboYn2Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772201072435-dbo6sli372jvesa6066c0h1ichepe47a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

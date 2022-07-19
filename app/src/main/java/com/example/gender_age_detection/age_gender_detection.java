@@ -1,9 +1,11 @@
 package com.example.gender_age_detection;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -92,7 +94,7 @@ public class age_gender_detection {
                 // close input and output stream
                 is.close();
                 os.close();
-                cascadeClassifier=new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                cascadeClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
                 // if cascade file is loaded print
                 Log.d("age_gender_detection","Classifier is loaded");
 
@@ -104,7 +106,7 @@ public class age_gender_detection {
 
 
     }
-    public Mat recognizeImage(Mat mat_image){
+    public Mat recognizeImage(Mat mat_image,Context context){
             Mat a=mat_image.t();
             Core.flip(a,mat_image,1);
             a.release();
@@ -161,6 +163,7 @@ public class age_gender_detection {
 
                 interpreter.runForMultipleInputsOutputs(input,output_map);
 
+                //System.out.println(output_map.values().toString());
                 Object age_out= output_map.get(0);
                 Object gender_out= output_map.get(1);
 
@@ -168,12 +171,26 @@ public class age_gender_detection {
                 float gender_val= (float) Array.get(Array.get(gender_out,0),0);
 
 
+
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = preferences.edit();
+
+
                 if (gender_val > 0.5) {
 
                     Imgproc.putText(cropped_rgba,"Female, "+age_value,new Point(10,20),1,1.7,new Scalar(255,0,0,255),4);
+                    editor.putString("age", String.valueOf(age_value));
+                    editor.putString("gender", "Female");
+                    editor.apply();
+
+
 
                 }else{
                     Imgproc.putText(cropped_rgba,"Male, "+age_value,new Point(10,20),1,1.7,new Scalar(0,0,255,255),4);
+
+//
+                    editor.putString("gender","Male");
+                    editor.apply();
 
                 }
                 Log.d("age_gender_detection","Output"+age_value+","+gender_val);

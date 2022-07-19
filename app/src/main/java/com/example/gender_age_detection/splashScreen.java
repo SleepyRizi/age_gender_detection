@@ -38,7 +38,7 @@ public class splashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(splashScreen.this,MainActivity.class);
+                Intent intent = new Intent(splashScreen.this,loginUser.class);
                 startActivity(intent);
                 finish();
                /* Pair[] pairs= new Pair[2];

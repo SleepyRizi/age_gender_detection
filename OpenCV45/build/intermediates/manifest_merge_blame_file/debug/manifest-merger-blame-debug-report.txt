@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="21"
-6-->D:\age_detection\gender_age_detection\OpenCV45\java\AndroidManifest.xml
+6-->E:\Courses\age_detection\gender_age_detection\OpenCV45\java\AndroidManifest.xml
 7        android:targetSdkVersion="33" />
-7-->D:\age_detection\gender_age_detection\OpenCV45\java\AndroidManifest.xml
+7-->E:\Courses\age_detection\gender_age_detection\OpenCV45\java\AndroidManifest.xml
 8
 9</manifest>

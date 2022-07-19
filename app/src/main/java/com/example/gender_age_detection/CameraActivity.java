@@ -1,17 +1,29 @@
 package com.example.gender_age_detection;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -19,12 +31,18 @@ import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CameraActivity extends Activity implements CameraBridgeViewBase.CvCameraViewListener2{
     private static final String TAG="MainActivity";
+    public Button savebutton;
+    private FirebaseDatabase firebaseDatabase;
+    private  FirebaseFirestore db;
+
+    DatabaseReference databaseReference;
 
     private Mat mRgba;
     private Mat mGray;
@@ -68,10 +86,40 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         setContentView(R.layout.activity_camera);
 
+        savebutton = (Button) findViewById(R.id.saveData);
         mOpenCvCameraView=(CameraBridgeViewBase) findViewById(R.id.frame_Surface);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCameraPermissionGranted();
+
+        //mOpenCvCameraView.setCameraIndex(1);
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String age = preferences.getString("age","");
+        String gender = preferences.getString("gender","");
+
+
+        HashMap<String,String> HashMap=new HashMap<String,String>();
+        HashMap.put("age", age);
+        HashMap.put("Gender", gender);
+
+
+        db = FirebaseFirestore.getInstance();
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Global.gendervalue!= null){
+//                    Toast.makeText(CameraActivity.this, String.valueOf(Global.age), Toast.LENGTH_SHORT).show();
+
+                }
+
+                if(Global.gendervalue != null ){
+                    db.collection("records").add(HashMap).addOnCompleteListener((OnCompleteListener<DocumentReference>) (DocumentReference) -> {
+                        Toast.makeText(CameraActivity.this, "Successfully Added ", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+        });
 
         try {
             int inputSize = 96;
@@ -123,8 +171,8 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame){
         mRgba=inputFrame.rgba();
         mGray=inputFrame.gray();
-        mRgba= age_gender_detection.recognizeImage(mRgba);
-
+        mRgba= age_gender_detection.recognizeImage(mRgba,CameraActivity.this);
+        //Core.flip(mRgba,mRgba,1);
         return mRgba;
 
     }
