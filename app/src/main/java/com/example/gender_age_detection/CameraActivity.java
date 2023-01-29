@@ -86,7 +86,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         setContentView(R.layout.activity_camera);
 
-        savebutton = (Button) findViewById(R.id.saveData);
+//        savebutton = (Button) findViewById(R.id.saveData);
         mOpenCvCameraView=(CameraBridgeViewBase) findViewById(R.id.frame_Surface);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCameraPermissionGranted();
@@ -105,21 +105,21 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
 
         db = FirebaseFirestore.getInstance();
-        savebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(Global.gendervalue!= null){
-//                    Toast.makeText(CameraActivity.this, String.valueOf(Global.age), Toast.LENGTH_SHORT).show();
-
-                }
-
-                if(Global.gendervalue != null ){
-                    db.collection("records").add(HashMap).addOnCompleteListener((OnCompleteListener<DocumentReference>) (DocumentReference) -> {
-                        Toast.makeText(CameraActivity.this, "Successfully Added ", Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }
-        });
+//        savebutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(Global.gendervalue!= null){
+////                    Toast.makeText(CameraActivity.this, String.valueOf(Global.age), Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+////                if(Global.gendervalue != null ){
+////                    db.doc().collection("records").add(HashMap).addOnCompleteListener((OnCompleteListener<DocumentReference>) (DocumentReference) -> {
+////                        Toast.makeText(CameraActivity.this, "Successfully Added ", Toast.LENGTH_SHORT).show();
+////                    });
+////                }
+//            }
+//        });
 
         try {
             int inputSize = 96;
