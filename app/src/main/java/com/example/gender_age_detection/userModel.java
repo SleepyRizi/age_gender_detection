@@ -1,27 +1,54 @@
 package com.example.gender_age_detection;
 
 public class userModel {
-    int age;
+    String age;
     String gender;
+    String timeStamp;
 
-    public userModel(int age, String gender) {
+    public userModel(String age, String gender, String timeStamp) {
         this.age = age;
         this.gender = gender;
+        this.timeStamp = timeStamp;
+    }
+    public userModel() {
+
+        // Empty constructor
     }
 
-    public int getAge() {
+
+    public String getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getGender() {
         return gender;
     }
 
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+
+
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+
+    @Override
+    public String toString() {
+        return "userModel{" +
+                "age='" + age + '\'' +
+                ", gender='" + gender + '\'' +
+                ", timeStamp='" + timeStamp + '\'' +
+                '}';
     }
 }

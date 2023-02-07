@@ -35,6 +35,8 @@ import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Calendar;
+import java.util.Date;
 
 public class age_gender_detection {
 
@@ -44,6 +46,7 @@ public class age_gender_detection {
     // define height and width of original frame
     private int height=0;
     private int width=0;
+    Date currentTime = Calendar.getInstance().getTime();
     // now define Gpudelegate
     // it is use to implement gpu in interpreter
     private GpuDelegate gpuDelegate=null;
@@ -174,23 +177,35 @@ public class age_gender_detection {
 
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 SharedPreferences.Editor editor = preferences.edit();
+                if(gender_val>0.5){
+                    editor.clear();
+                    editor.putString("age", String.valueOf(age_value));
+                    editor.putString("gender", "Female");
+                    editor.putString("date", String.valueOf(currentTime));
+                    System.out.println(currentTime);
+                    editor.apply();
+                }
+                if(gender_val<0.5){
+                    editor.clear();
+                    editor.putString("age", String.valueOf(age_value));
+                    editor.putString("gender", "Male");
+                    editor.putString("date", String.valueOf(currentTime));
+                    editor.apply();
+
+                }
+
 
 
                 if (gender_val > 0.5) {
 
                     Imgproc.putText(cropped_rgba,"Female, "+age_value,new Point(10,20),1,1.7,new Scalar(255,0,0,255),4);
-                    editor.putString("age", String.valueOf(age_value));
-                    editor.putString("gender", "Female");
-                    editor.apply();
+
 
 
 
                 }else{
                     Imgproc.putText(cropped_rgba,"Male, "+age_value,new Point(10,20),1,1.7,new Scalar(0,0,255,255),4);
-
-//
-                    editor.putString("gender","Male");
-                    editor.apply();
+                    
 
                 }
                 Log.d("age_gender_detection","Output"+age_value+","+gender_val);

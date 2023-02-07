@@ -40,7 +40,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
     private static final String TAG="MainActivity";
     public Button savebutton;
     private FirebaseDatabase firebaseDatabase;
-    private  FirebaseFirestore db;
+    private  FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     DatabaseReference databaseReference;
 
@@ -86,7 +86,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
 
         setContentView(R.layout.activity_camera);
 
-//        savebutton = (Button) findViewById(R.id.saveData);
+        savebutton = (Button) findViewById(R.id.saveData);
         mOpenCvCameraView=(CameraBridgeViewBase) findViewById(R.id.frame_Surface);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCameraPermissionGranted();
@@ -94,32 +94,22 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         //mOpenCvCameraView.setCameraIndex(1);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String age = preferences.getString("age","");
         String gender = preferences.getString("gender","");
+        String time = preferences.getString("date","");
+
 
 
         HashMap<String,String> HashMap=new HashMap<String,String>();
         HashMap.put("age", age);
-        HashMap.put("Gender", gender);
+        HashMap.put("gender", gender);
+        HashMap.put("timeStamp", time);
 
 
         db = FirebaseFirestore.getInstance();
-//        savebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(Global.gendervalue!= null){
-////                    Toast.makeText(CameraActivity.this, String.valueOf(Global.age), Toast.LENGTH_SHORT).show();
-//
-//                }
-//
-////                if(Global.gendervalue != null ){
-////                    db.doc().collection("records").add(HashMap).addOnCompleteListener((OnCompleteListener<DocumentReference>) (DocumentReference) -> {
-////                        Toast.makeText(CameraActivity.this, "Successfully Added ", Toast.LENGTH_SHORT).show();
-////                    });
-////                }
-//            }
-//        });
+
 
         try {
             int inputSize = 96;
@@ -128,6 +118,24 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         catch (IOException e){
             e.printStackTrace();
         }
+
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(CameraActivity.this, String.valueOf(Global.age), Toast.LENGTH_SHORT).show();
+                db.collection("records").add(HashMap).addOnCompleteListener((OnCompleteListener<DocumentReference>) (DocumentReference) -> {
+
+                    Toast.makeText(CameraActivity.this, "Successfully Added ", Toast.LENGTH_SHORT).show();
+                });
+//                if(age!= null){
+////
+//                }
+//
+//                if(gender != null ){
+//
+//                }
+            }
+        });
     }
 
     @Override
